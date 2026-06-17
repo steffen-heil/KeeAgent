@@ -56,6 +56,7 @@
     <Compile Include="DatabaseSettings.cs" />
     <Compile Include="EntrySettings.cs" />
     <Compile Include="ExtensionMethods.cs" />
+    <Compile Include="SshKeyGenerator.cs" />
     <Compile Include="KeeAgentColumnProvider.cs" />
     <Compile Include="NoAttachmentException.cs" />
     <Compile Include="NotificationOptions.cs" />
@@ -122,6 +123,12 @@
     </Compile>
     <Compile Include="UI\ManageKeyFileDialog.Designer.cs">
       <DependentUpon>ManageKeyFileDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\GenerateKeyDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\GenerateKeyDialog.Designer.cs">
+      <DependentUpon>GenerateKeyDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\SystemIcon.cs">
       <SubType>Component</SubType>
@@ -200,6 +207,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\ManageKeyFileDialog.resx">
       <DependentUpon>ManageKeyFileDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\GenerateKeyDialog.resx">
+      <DependentUpon>GenerateKeyDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\OptionsPanel.resx">
       <DependentUpon>OptionsPanel.cs</DependentUpon>

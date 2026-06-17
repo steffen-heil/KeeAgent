@@ -9,7 +9,9 @@ using System.Linq;
 using System.Windows.Forms;
 using KeePass.Forms;
 using KeePass.Util;
+using KeePassLib;
 using KeePassLib.Security;
+using KeePassLib.Utility;
 using SshAgentLib.Extension;
 using SshAgentLib.Keys;
 
@@ -107,6 +109,7 @@ namespace KeeAgent.UI
       destinationConstraintDataGridView.Enabled = destinationConstraintCheckBox.Enabled
         && destinationConstraintCheckBox.Checked;
       openManageFilesDialogButton.Enabled = hasSshKeyCheckBox.Checked;
+      generateKeyButton.Enabled = true;
       UpdateKeyInfoDelayed();
     }
 
@@ -206,6 +209,58 @@ namespace KeeAgent.UI
       //pwEntryForm.ResizeColumnHeaders();
 
       // probably only needed for mono, but doesn't hurt to call it unconditionally
+      UpdateControlStates();
+    }
+
+    private void generateKeyButton_Click(object sender, EventArgs e)
+    {
+      pwEntryForm.UpdateEntryBinaries(true, false);
+
+      if (pwEntryForm.EntryBinaries.Get("id_ed25519") != null) {
+        var confirm = MessageBox.Show(
+          ParentForm,
+          "An SSH key attachment already exists. Replacing it will invalidate any " +
+          "servers already configured with the current public key. Continue?",
+          "Replace Existing Key?",
+          MessageBoxButtons.YesNo,
+          MessageBoxIcon.Warning);
+        if (confirm != DialogResult.Yes) {
+          return;
+        }
+      }
+
+      var entryTitle = pwEntryForm.EntryRef.Strings.ReadSafe(PwDefs.TitleField);
+      string comment;
+      using (var dialog = new GenerateKeyDialog(entryTitle)) {
+        if (dialog.ShowDialog(ParentForm) != DialogResult.OK) {
+          return;
+        }
+        comment = dialog.Comment;
+      }
+
+      byte[] privateKeyBytes, publicKeyBytes;
+      try {
+        SshKeyGenerator.Generate(comment, out privateKeyBytes, out publicKeyBytes);
+      }
+      catch (Exception ex) {
+        MessageService.ShowWarning("KeeAgent: Failed to generate SSH key:", ex.Message);
+        return;
+      }
+
+      pwEntryForm.EntryBinaries.Set("id_ed25519",
+        new ProtectedBinary(false, privateKeyBytes));
+      pwEntryForm.EntryBinaries.Set("id_ed25519.pub",
+        new ProtectedBinary(false, publicKeyBytes));
+      pwEntryForm.UpdateEntryBinaries(false, true);
+
+      entrySettingsBindingSource.SuspendBinding();
+      CurrentSettings.AllowUseOfSshKey = true;
+      CurrentSettings.Location = new EntrySettings.LocationData {
+        SelectedType = EntrySettings.LocationType.Attachment,
+        AttachmentName = "id_ed25519",
+      };
+      entrySettingsBindingSource.ResumeBinding();
+
       UpdateControlStates();
     }
 

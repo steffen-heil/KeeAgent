@@ -47,6 +47,7 @@
             this.lifetimeConstraintNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.lifetimeConstraintLabel = new System.Windows.Forms.Label();
             this.openManageFilesDialogButton = new System.Windows.Forms.Button();
+            this.generateKeyButton = new System.Windows.Forms.Button();
             this.destinationConstraintCheckBox = new System.Windows.Forms.CheckBox();
             this.destinationConstraintDataGridView = new System.Windows.Forms.DataGridView();
             this.fromHostDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -198,6 +199,19 @@
             this.openManageFilesDialogButton.UseVisualStyleBackColor = true;
             this.openManageFilesDialogButton.Click += new System.EventHandler(this.openManageFilesDialogButton_Click);
             //
+            // generateKeyButton
+            //
+            this.generateKeyButton.Anchor = ((System.Windows.Forms.AnchorStyles)(
+              System.Windows.Forms.AnchorStyles.Bottom |
+              System.Windows.Forms.AnchorStyles.Left));
+            this.generateKeyButton.Location = new System.Drawing.Point(306, 358);
+            this.generateKeyButton.Name = "generateKeyButton";
+            this.generateKeyButton.Size = new System.Drawing.Size(46, 46);
+            this.generateKeyButton.TabIndex = 11;
+            this.generateKeyButton.Text = "+";
+            this.generateKeyButton.UseVisualStyleBackColor = true;
+            this.generateKeyButton.Click += new System.EventHandler(this.generateKeyButton_Click);
+            //
             // destinationConstraintCheckBox
             //
             resources.ApplyResources(this.destinationConstraintCheckBox, "destinationConstraintCheckBox");
@@ -305,6 +319,7 @@
             this.Controls.Add(this.destinationConstraintDataGridView);
             this.Controls.Add(this.destinationConstraintCheckBox);
             this.Controls.Add(this.invalidKeyWarningIcon);
+            this.Controls.Add(this.generateKeyButton);
             this.Controls.Add(this.openManageFilesDialogButton);
             this.Controls.Add(this.lifetimeConstraintLabel);
             this.Controls.Add(this.lifetimeConstraintNumericUpDown);
@@ -350,6 +365,7 @@
         private System.Windows.Forms.NumericUpDown lifetimeConstraintNumericUpDown;
         private System.Windows.Forms.Label lifetimeConstraintLabel;
     private System.Windows.Forms.Button openManageFilesDialogButton;
+    private System.Windows.Forms.Button generateKeyButton;
     private SystemIcon invalidKeyWarningIcon;
     private System.Windows.Forms.CheckBox destinationConstraintCheckBox;
     private System.Windows.Forms.DataGridView destinationConstraintDataGridView;
