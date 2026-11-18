@@ -28,5 +28,10 @@ using System.Runtime.InteropServices;
 //      Build Number
 //      Revision
 //
+// AssemblyVersion stays at the upstream value: it is the binding identity.
+// The fourth field of the file version counts local builds on top of upstream
+// v0.13.8, and is what KeePass shows in its plugin list (PluginInfo reads
+// FileVersionInfo.FileVersion), so the loaded build can be identified.
 [assembly: AssemblyVersion("0.13.8.0")]
-[assembly: AssemblyFileVersion("0.13.8.0")]
+[assembly: AssemblyFileVersion("0.13.8.3")]
+[assembly: AssemblyInformationalVersion("0.13.8+sf.3")]
